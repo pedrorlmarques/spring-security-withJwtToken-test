@@ -14,8 +14,8 @@ import org.springframework.util.Assert;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * A {@link WithMockJwtTokenSecurityContextFactory} that works with {@link WithMockJwtToken}.
@@ -28,14 +28,14 @@ public class WithMockJwtTokenSecurityContextFactory implements WithSecurityConte
         SecurityContext context = SecurityContextHolder.createEmptyContext();
 
         //default jwt token attributes
-        var jwtBuilder = Jwt
+        Jwt.Builder jwtBuilder = Jwt
                 .withTokenValue(withMockJwtToken.token())
                 .header("alg", "RS256")
                 .header("typ", "JWT")
                 .subject(withMockJwtToken.subject());
 
         if (withMockJwtToken.audience().length != 0) {
-            jwtBuilder = jwtBuilder.audience(Set.of(withMockJwtToken.audience()));
+            jwtBuilder = jwtBuilder.audience(new HashSet<>(Arrays.asList(withMockJwtToken.audience())));
         }
 
         if (!withMockJwtToken.expiresAt().isEmpty()) {
@@ -51,7 +51,7 @@ public class WithMockJwtTokenSecurityContextFactory implements WithSecurityConte
         }
 
         if (withMockJwtToken.scope().length != 0) {
-            jwtBuilder.claim("scope", Set.of(withMockJwtToken.scope()));
+            jwtBuilder.claim("scope", new HashSet<>(Arrays.asList(withMockJwtToken.scope())));
         }
 
         List<GrantedAuthority> grantedAuthorities = getGrantedAuthorities(withMockJwtToken);
@@ -64,7 +64,7 @@ public class WithMockJwtTokenSecurityContextFactory implements WithSecurityConte
 
         Jwt jwt = jwtBuilder.build();
 
-        var jwtAuthenticationToken = new JwtAuthenticationToken(jwt, grantedAuthorities, jwt.getSubject());
+        JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwt, grantedAuthorities, jwt.getSubject());
         context.setAuthentication(jwtAuthenticationToken);
 
         return context;
