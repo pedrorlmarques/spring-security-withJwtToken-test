@@ -4,6 +4,28 @@ WithMockJwtToken annotation that will create a JwtAuthenticationToken.
 
 ## How to use
 
+Step 1. Add the JitPack repository to your build file
+Add it in your root build.gradle at the end of repositories:
+
+
+````java
+allprojects {
+   repositories {
+    ...
+	maven { url 'https://jitpack.io' }
+   }
+}
+````
+
+Step 2. Add the dependency
+
+````java
+dependencies {
+	        implementation 'com.github.pedrorlmarques:spring-security-withJwtToken-test:Tag'
+	}
+````
+
+<br>
 Add the annotation at the Test Class level
 <br>
 
