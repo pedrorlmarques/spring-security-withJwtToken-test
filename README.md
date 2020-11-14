@@ -1,6 +1,8 @@
-# spring-security-test-withmockjwttoken
-WithMockJwtToken annotation that will create a JwtAuthenticationToken.
+# Spring Security Test WithMockJwtToken
 
+[![](https://jitpack.io/v/pedrorlmarques/spring-security-withJwtToken-test.svg)](https://jitpack.io/#pedrorlmarques/spring-security-withJwtToken-test)
+
+WithMockJwtToken annotation that will create a JwtAuthenticationToken.
 
 ## How to use
 
