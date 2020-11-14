@@ -1,30 +1,25 @@
-# spring-security-test-withmockjwttoken
-WithMockJwtToken annotation that will create a JwtAuthenticationToken.
+package com.github.pedrorlmarques.annotation;
 
+import com.github.pedrorlmarques.support.WithMockJwtTokenSecurityContextFactory;
+import org.springframework.core.annotation.AliasFor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.test.context.support.TestExecutionEvent;
+import org.springframework.security.test.context.support.WithSecurityContext;
+import org.springframework.test.context.TestContext;
 
-## How to use
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-Add the annotation at the Test Class level
-<br>
-
-Default
-
-```java
-@WithMockJwtToken(subject = "pedro")
-```
-
-More customisation
-
-```java
-@WithMockJwtToken(subject = "pedro", authorities = {"PT", "read-write"}, additionalClaims = {
-        @WithMockJwtTokenClaim(name = "account", value = "pedro-1"),
-        @WithMockJwtTokenClaim(name = "tenant", value = "dev")
-})
-```
-
-## Options
-
-````java
+@Target({ ElementType.METHOD, ElementType.TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Documented
+@WithSecurityContext(factory = WithMockJwtTokenSecurityContextFactory.class)
 public @interface WithMockJwtToken {
 
     /**
@@ -126,29 +121,3 @@ public @interface WithMockJwtToken {
     @AliasFor(annotation = WithSecurityContext.class)
     TestExecutionEvent setupBefore() default TestExecutionEvent.TEST_METHOD;
 }
-
-
-```` 
-
-WithMockJwtTokenClaim
-
-````java
-public @interface WithMockJwtTokenClaim {
-
-    /**
-     * The claim name to be used.
-     *
-     * @return
-     */
-    String name();
-
-    /**
-     * The claim value to be used.
-     *
-     * @return
-     */
-    String value();
-}
-
-````
-
