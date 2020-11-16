@@ -121,6 +121,15 @@ public @interface WithMockJwtToken {
 
 
     /**
+     * Security Context Strategy. The default is MODE_THREADLOCAL
+     * Check SecurityContextHolder
+     *
+     * @return
+     */
+    String securityStrategyName() default "MODE_THREADLOCAL";
+
+
+    /**
      * Additional claims to be added on JWT Token
      *
      * @return

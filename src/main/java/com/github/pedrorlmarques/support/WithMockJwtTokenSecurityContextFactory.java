@@ -41,8 +41,9 @@ public class WithMockJwtTokenSecurityContextFactory implements WithSecurityConte
     @Override
     public SecurityContext createSecurityContext(WithMockJwtToken withMockJwtToken) {
 
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        SecurityContextHolder.setStrategyName(withMockJwtToken.securityStrategyName());
 
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
         //default jwt token attributes
         Jwt.Builder jwtBuilder = Jwt
                 .withTokenValue(withMockJwtToken.token())
