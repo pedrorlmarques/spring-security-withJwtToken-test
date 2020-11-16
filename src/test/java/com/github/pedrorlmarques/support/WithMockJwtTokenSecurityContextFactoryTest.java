@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 import java.time.Instant;
@@ -79,6 +80,24 @@ class WithMockJwtTokenSecurityContextFactoryTest {
         given(this.withMockJwtToken.authorities()).willReturn(new String[]{});
         assertThat((Instant) ((JwtAuthenticationToken) this.factory.createSecurityContext(this.withMockJwtToken).getAuthentication()).getTokenAttributes().get("exp"))
                 .isEqualTo(Instant.parse(now));
+    }
+
+    @Test
+    public void securityStrategyWorks() {
+
+        given(this.withMockJwtToken.securityStrategyName()).willReturn(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+        given(this.withMockJwtToken.token()).willReturn("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
+        given(this.withMockJwtToken.roles()).willReturn(new String[]{});
+        given(this.withMockJwtToken.audience()).willReturn(new String[]{});
+        given(this.withMockJwtToken.expiresAt()).willReturn("");
+        given(this.withMockJwtToken.issuedAt()).willReturn("");
+        given(this.withMockJwtToken.jti()).willReturn("");
+        given(this.withMockJwtToken.scope()).willReturn(new String[]{});
+        given(this.withMockJwtToken.additionalClaims()).willReturn(new WithMockJwtTokenClaim[]{});
+        given(this.withMockJwtToken.authorities()).willReturn(new String[]{});
+
+        assertThat(((JwtAuthenticationToken) this.factory.createSecurityContext(this.withMockJwtToken).getAuthentication())).isNotNull();
+        assertThat(SecurityContextHolder.getContextHolderStrategy().getClass().getSimpleName()).isEqualTo("InheritableThreadLocalSecurityContextHolderStrategy");
     }
 
     @Test
