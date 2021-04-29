@@ -1,0 +1,32 @@
+version: 2
+updates:
+- package-ecosystem: gradle
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: org.springframework:spring-test
+    versions:
+    - 5.3.3
+    - 5.3.4
+    - 5.3.5
+  - dependency-name: org.mockito:mockito-junit-jupiter
+    versions:
+    - 3.7.7
+    - 3.8.0
+  - dependency-name: org.springframework.security:spring-security-oauth2-jose
+    versions:
+    - 5.4.2
+    - 5.4.4
+    - 5.4.5
+  - dependency-name: org.springframework.security:spring-security-test
+    versions:
+    - 5.4.2
+    - 5.4.4
+    - 5.4.5
+  - dependency-name: org.springframework.security:spring-security-oauth2-resource-server
+    versions:
+    - 5.4.2
+    - 5.4.4
+    - 5.4.5
