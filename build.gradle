@@ -3,8 +3,20 @@ plugins {
 }
 
 group = 'com.github.pedrorlmarques'
-version = '1.0.1'
-sourceCompatibility = '1.8'
+version = '1.0.2'
+sourceCompatibility = '11'
+
+ext {
+    set('springSecurityOauth2Version', "2.5.1.RELEASE")
+    set('springSecurityOauth2ResourceServerVersion', "5.6.2")
+    set('springSecurityOauth2JoseVersion', "5.6.2")
+    set('springSecurityTestVersion', "5.6.2")
+    set('springTestVersion', "5.3.16")
+    set('junitJupiterVersion', "5.8.2")
+    set('assertjVersion', "3.22.0")
+    set('mockitoJunitJupiterVersion', "4.3.1")
+}
+
 
 repositories {
     mavenCentral()
@@ -21,19 +33,13 @@ test {
 }
 
 dependencies {
-    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.5.0.RELEASE'
-    compile group: 'org.springframework.security', name: 'spring-security-test', version: '5.4.1'
-    compile group: 'org.springframework.security', name: 'spring-security-oauth2-resource-server', version: '5.4.1'
-    compile group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.4.1'
-    testCompile group: 'org.springframework', name: 'spring-test', version: '5.3.1'
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.0'
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0'
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.18.1'
-    testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.6.0'
-
-
-
-
-
-
+    compile "org.springframework.security.oauth:spring-security-oauth2:${springSecurityOauth2Version}"
+    compile "org.springframework.security:spring-security-oauth2-resource-server:${springSecurityOauth2ResourceServerVersion}"
+    compile "org.springframework.security:spring-security-oauth2-jose:${springSecurityOauth2JoseVersion}"
+    compile "org.springframework.security:spring-security-test:${springSecurityTestVersion}"
+    testCompile "org.springframework:spring-test:${springTestVersion}"
+    testCompile "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
+    testCompile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
+    testCompile "org.assertj:assertj-core:${assertjVersion}"
+    testCompile "org.mockito:mockito-junit-jupiter:${mockitoJunitJupiterVersion}"
 }
